@@ -1,6 +1,6 @@
 # ncmtool
 
-`ncmtool` 是一个基于 [ncmdump](https://github.com/taurusxin/ncmdump) 的图形界面解密工具，支持将网易云 `.ncm` 文件解密为常见音频格式（如 FLAC、MP3），并可选执行转码。
+`ncmtool` 是一个基于 [ncmdump](https://github.com/taurusxin/ncmdump) 的Windows版图形界面解密工具，支持将网易云 `.ncm` 文件解密为常见音频格式（如 FLAC、MP3），并可选执行转码。
 
 > 本项目仅为原始命令行工具的图形封装，核心解密逻辑来自原作者项目：[taurusxin/ncmdump](https://github.com/taurusxin/ncmdump)。
 
@@ -34,7 +34,7 @@
 项目提供以下两个脚本，位于项目根目录：
 
 ####  `build.bat`
-1. 生成ncmtool.exe可执行文件，如果你不需要安装，执行它即可
+1. 生成ncmtool.exe可执行文件，路径：`build/Release/ncmtool.exe `如果你不需要安装，执行它即可
 
 ####  `build_installer.bat`
 
