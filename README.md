@@ -17,16 +17,6 @@
 
 ---
 
-## 🖥️ 使用方法
-
-1. 启动 `ncmtool.exe`
-2. 点击「选择 `.ncm` 文件」
-3. 选择输出目录（或保持默认）
-4. 选择是否转码
-5. 点击「开始解密」
-
----
-
 ## 🛠 构建说明
 
 项目使用 C++17 + Qt 6 + CMake 构建，并集成一键打包流程。
@@ -43,7 +33,10 @@
 
 项目提供以下两个脚本，位于项目根目录：
 
-#### 🔧 `build_installer.bat`
+####  `build.bat`
+1. 生成ncmtool.exe可执行文件，如果你不需要安装，执行它即可
+
+####  `build_installer.bat`
 
 一键执行以下步骤：
 
@@ -52,7 +45,7 @@
 3. 使用 `UPX` 压缩所有可执行文件和 DLL（可选）
 4. 调用 `makensis` 执行打包脚本，生成安装包 `ncmtool_setup.exe`
 
-#### 📦 `ncmtool_installer.nsi`
+####  `ncmtool_installer.nsi`
 
 NSIS 安装脚本，定义了以下内容：
 
