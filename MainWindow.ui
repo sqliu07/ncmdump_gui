@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>500</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>NCM 解密工具</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+
+    <item>
+     <layout class="QHBoxLayout" name="layoutSelectFile">
+      <item>
+       <widget class="QPushButton" name="btnSelectFile">
+        <property name="text">
+         <string>选择 .ncm 文件</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="labelFile">
+        <property name="text">
+         <string>未选择文件</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+
+    <!-- ⬇ 新增文件列表展示区域 -->
+    <item>
+     <widget class="QListWidget" name="listFiles">
+      <property name="minimumHeight">
+       <number>100</number>
+      </property>
+     </widget>
+    </item>
+
+    <item>
+     <layout class="QHBoxLayout" name="layoutSelectOutput">
+      <item>
+       <widget class="QPushButton" name="btnSelectOutput">
+        <property name="text">
+         <string>选择输出目录</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="labelOutput">
+        <property name="text">
+         <string>未选择输出目录</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+
+    <item>
+     <layout class="QHBoxLayout" name="layoutFormat">
+      <item>
+       <widget class="QLabel" name="labelFormat">
+        <property name="text">
+         <string>输出格式：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="comboFormat"/>
+      </item>
+     </layout>
+    </item>
+
+    <item>
+     <widget class="QPushButton" name="btnStart">
+      <property name="text">
+       <string>开始解密</string>
+      </property>
+     </widget>
+    </item>
+
+    <item>
+     <widget class="QTextEdit" name="textLog">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <customwidgets/>
+</ui>
