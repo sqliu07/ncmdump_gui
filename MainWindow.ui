@@ -93,6 +93,9 @@
       </property>
      </widget>
     </item>
+    <item>
+      <widget class="QProgressBar" name="progressBar"/>
+    </item>
    </layout>
   </widget>
  </widget>

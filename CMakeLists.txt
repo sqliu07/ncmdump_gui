@@ -18,6 +18,8 @@ add_executable(${PROJECT_NAME}
     main.cpp
     MainWindow.h
     MainWindow.cpp
+    Worker.h
+    Worker.cpp 
     MainWindow.ui
     res/app_icon.rc
 )
