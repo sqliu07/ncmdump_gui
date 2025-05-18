@@ -26,6 +26,13 @@
        </widget>
       </item>
       <item>
+        <widget class="QPushButton" name="btnSelectFolder">
+         <property name="text">
+          <string>选择文件夹</string>
+         </property>
+        </widget>
+      </item>
+      <item>
         <widget class="QPushButton" name="btnRemoveSelected">
           <property name="text">
             <string>移除所选</string>
@@ -83,6 +90,14 @@
        <widget class="QComboBox" name="comboFormat"/>
       </item>
      </layout>
+    </item>
+
+    <item>
+     <widget class="QCheckBox" name="checkDeleteOriginal">
+      <property name="text">
+       <string>处理完成后删除原始 .ncm 文件</string>
+      </property>
+     </widget>
     </item>
 
     <item>

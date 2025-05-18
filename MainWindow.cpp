@@ -30,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
         selectedFiles.removeAll(item->text());
         delete item;
     }
+    connect(ui->btnSelectFolder, &QPushButton::clicked, this, &MainWindow::on_btnSelectFolder_clicked);
     QSettings settings("ncmtool", "config");
     QString lastOut = settings.value("lastOutputDir").toString();
     if (!lastOut.isEmpty()) {
@@ -86,6 +87,33 @@ void MainWindow::on_btnSelectFile_clicked() {
     settings.setValue("lastInputDir", fi.absolutePath());
 }
 
+void MainWindow::on_btnSelectFolder_clicked() {
+    QSettings settings("ncmtool", "config");
+    QString defaultDir = settings.value("lastInputDir", QDir::homePath()).toString();
+    QString folder = QFileDialog::getExistingDirectory(this, "选择包含 .ncm 文件的文件夹", defaultDir);
+    if (folder.isEmpty()) return;
+
+    QDir dir(folder);
+    QFileInfoList fileList = dir.entryInfoList(QStringList("*.ncm"), QDir::Files | QDir::NoSymLinks);
+
+    int added = 0;
+    for (const QFileInfo &fileInfo : fileList) {
+        QString path = fileInfo.absoluteFilePath();
+        if (!selectedFiles.contains(path)) {
+            selectedFiles.append(path);
+            ui->listFiles->addItem(path);
+            added++;
+        }
+    }
+
+    if (added == 0) {
+        QMessageBox::information(this, "没有新文件", "该文件夹下没有可用的 .ncm 文件或已全部添加。");
+    }
+
+    ui->labelFile->setText(QString("已选择 %1 个 文件").arg(selectedFiles.size()));
+    settings.setValue("lastInputDir", folder);
+}
+
 void MainWindow::on_btnSelectOutput_clicked() {
     QSettings settings("ncmtool", "config");
     QString defaultDir = settings.value("lastOutputDir", QDir::homePath()).toString();
@@ -117,8 +145,8 @@ void MainWindow::on_btnStart_clicked() {
     ui->progressBar->setMaximum(selectedFiles.size());
     ui->btnCancel->setVisible(true);
     ui->btnCancel->setEnabled(true);
-
-    worker = new Worker(selectedFiles, actualOutputDir, ui->comboFormat->currentText());
+    bool deleteAfter = ui->checkDeleteOriginal->isChecked();
+    worker = new Worker(selectedFiles, actualOutputDir, ui->comboFormat->currentText(),  deleteAfter);
     thread = new QThread(this);
 
     worker->moveToThread(thread);

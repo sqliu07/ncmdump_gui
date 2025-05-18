@@ -19,6 +19,7 @@ public:
 
 private slots:
     void on_btnSelectFile_clicked();
+    void on_btnSelectFolder_clicked();
     void on_btnSelectOutput_clicked();
     void on_btnStart_clicked();
 

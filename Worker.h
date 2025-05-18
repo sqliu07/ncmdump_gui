@@ -7,7 +7,7 @@
 class Worker : public QObject {
     Q_OBJECT
 public:
-    Worker(const QStringList &files, const QString &outputDir, const QString &format);
+    Worker(const QStringList &files, const QString &outputDir, const QString &format, bool deleteOriginal);
     ~Worker() = default;
 
 signals:
@@ -19,11 +19,13 @@ signals:
 public slots:
     void start();
     void cancel();
+
 private:
     QStringList files;
     QString outputDir;
     QString format;
     std::atomic<bool> cancelRequested = false;
+    bool deleteOriginal = false;
 
     bool callLibNcmdump(const QString &filePath, const QString &outputDir);
     bool convertWithFfmpeg(const QString &inputPath, const QString &targetFormat);

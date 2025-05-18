@@ -10,8 +10,8 @@ typedef int   (__cdecl *DumpFunc)(void*, const char*);
 typedef void  (__cdecl *FixFunc)(void*);
 typedef void  (__cdecl *DestroyFunc)(void*);
 
-Worker::Worker(const QStringList &files, const QString &outputDir, const QString &format)
-    : files(files), outputDir(outputDir), format(format) {}
+Worker::Worker(const QStringList &files, const QString &outputDir, const QString &format, bool deleteOriginal)
+    : files(files), outputDir(outputDir), format(format), deleteOriginal(deleteOriginal) {}
 
 void Worker::start() {
     int total = files.size();
@@ -58,6 +58,14 @@ void Worker::start() {
                 QFile::remove(rawFile);
             } else {
                 emit log("⚠️ 转码失败");
+            }
+        }
+
+        if (deleteOriginal) {
+            if (QFile::remove(filePath)) {
+                emit log("🧹 已删除原始文件: " + filePath);
+            } else {
+                emit log("⚠️ 无法删除原始文件: " + filePath);
             }
         }
 
