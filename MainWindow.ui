@@ -26,6 +26,13 @@
        </widget>
       </item>
       <item>
+        <widget class="QPushButton" name="btnRemoveSelected">
+          <property name="text">
+            <string>移除所选</string>
+            </property>
+          </widget>
+      </item>
+      <item>
        <widget class="QLabel" name="labelFile">
         <property name="text">
          <string>未选择文件</string>
@@ -56,7 +63,7 @@
       <item>
        <widget class="QLabel" name="labelOutput">
         <property name="text">
-         <string>未选择输出目录</string>
+         <string>未选择输出目录，将保存在源目录</string>
         </property>
        </widget>
       </item>

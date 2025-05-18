@@ -15,6 +15,7 @@ class MainWindow : public QMainWindow {
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void addExternalFile(const QString &path);
 
 private slots:
     void on_btnSelectFile_clicked();

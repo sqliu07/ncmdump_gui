@@ -19,7 +19,8 @@ File /r "../installer\*.*"
 
   CreateShortcut "$SMPROGRAMS\${APPNAME}.lnk" "$INSTDIR\ncmtool.exe"
   CreateShortcut "$DESKTOP\${APPNAME}.lnk" "$INSTDIR\ncmtool.exe"
-
+  WriteRegStr HKCR "SystemFileAssociations\.ncm\shell\ncmtool" "" "Use ncmtool"
+  WriteRegStr HKCR "SystemFileAssociations\.ncm\shell\ncmtool\command" "" '"$INSTDIR\ncmtool.exe" "%1"'
   WriteUninstaller "$INSTDIR\Uninstall.exe"
 SectionEnd
 
@@ -28,4 +29,5 @@ Section "Uninstall"
   Delete "$SMPROGRAMS\${APPNAME}.lnk"
   Delete "$DESKTOP\${APPNAME}.lnk"
   RMDir /r "$INSTDIR"
+  DeleteRegKey HKCR "SystemFileAssociations\.ncm\shell\ncmtool"
 SectionEnd
