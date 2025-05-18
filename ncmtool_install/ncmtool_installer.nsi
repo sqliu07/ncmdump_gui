@@ -13,21 +13,36 @@ UninstPage uninstConfirm
 UninstPage instfiles
 
 Section "Install"
-SetOutPath "$INSTDIR"
-File /r "../installer\*.*"
+  SetOutPath "$INSTDIR"
 
+  ; Copy all files from installer directory
+  File /r "..\out\build-release\installer\*.*"
 
-  CreateShortcut "$SMPROGRAMS\${APPNAME}.lnk" "$INSTDIR\ncmtool.exe"
+  ; Create Start Menu and Desktop shortcuts
+  CreateDirectory "$SMPROGRAMS\${APPNAME}"
+  CreateShortcut "$SMPROGRAMS\${APPNAME}\${APPNAME}.lnk" "$INSTDIR\ncmtool.exe"
   CreateShortcut "$DESKTOP\${APPNAME}.lnk" "$INSTDIR\ncmtool.exe"
-  WriteRegStr HKCR "SystemFileAssociations\.ncm\shell\ncmtool" "" "Use ncmtool"
-  WriteRegStr HKCR "SystemFileAssociations\.ncm\shell\ncmtool\command" "" '"$INSTDIR\ncmtool.exe" "%1"'
+
+  ; Associate .ncm files with this application
+  WriteRegStr HKCR "SystemFileAssociations\.ncm\shell\${APPNAME}" "" "Open with ${APPNAME}"
+  WriteRegStr HKCR "SystemFileAssociations\.ncm\shell\${APPNAME}\command" "" '"$INSTDIR\ncmtool.exe" "%1"'
+
+  ; Save uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
 SectionEnd
 
 Section "Uninstall"
+  ; Remove created files
   Delete "$INSTDIR\Uninstall.exe"
-  Delete "$SMPROGRAMS\${APPNAME}.lnk"
+  Delete "$INSTDIR\ncmtool.exe"
   Delete "$DESKTOP\${APPNAME}.lnk"
+  Delete "$SMPROGRAMS\${APPNAME}\${APPNAME}.lnk"
+
+  ; Remove directory
   RMDir /r "$INSTDIR"
-  DeleteRegKey HKCR "SystemFileAssociations\.ncm\shell\ncmtool"
+  RMDir "$SMPROGRAMS\${APPNAME}"
+
+  ; Remove .ncm file association
+  DeleteRegKey HKCR "SystemFileAssociations\.ncm\shell\${APPNAME}"
+
 SectionEnd

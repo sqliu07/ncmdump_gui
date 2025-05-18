@@ -1,31 +1,59 @@
 @echo off
-setlocal
+setlocal enabledelayedexpansion
 
-set BUILD_DIR=build
-set QT_PATH=C:\Qt\6.5.3\msvc2019_64
-set CMAKE_PREFIX=%QT_PATH%\lib\cmake
+:: ===== Configuration =====
+:: ===== Modify these variables based on your environment. =====
 set TARGET=ncmtool
+set QT_PATH=C:\Qt\6.9.0\msvc2022_64
+set CMAKE_PREFIX=%QT_PATH%\lib\cmake
 
-echo [1] Cleaning previous build directory...
-rd /s /q %BUILD_DIR%
+set BUILD_DIR=out\build-release
+set OUTPUT_DIR=%BUILD_DIR%\Release
 
-echo [2] Creating build directory...
-mkdir %BUILD_DIR%
-cd %BUILD_DIR%
+:: ===== Step 1: Clean previous build =====
+call :log_info "Removing previous build directory..."
+if exist "%BUILD_DIR%" rd /s /q "%BUILD_DIR%"
+mkdir "%BUILD_DIR%"
 
-echo [3] Running CMake configuration...
-cmake .. -G "Visual Studio 17 2022" -A x64 -DCMAKE_PREFIX_PATH="%CMAKE_PREFIX%"
+:: ===== Step 2: Run CMake configuration =====
+call :log_info "Configuring CMake..."
+cmake -S . -B "%BUILD_DIR%" -G "Visual Studio 17 2022" -A x64 -DCMAKE_PREFIX_PATH="%CMAKE_PREFIX%"
+if errorlevel 1 (
+    call :log_error "CMake configuration failed."
+    exit /b 1
+)
 
-echo [4] Building the project...
-cmake --build . --config Release
+:: ===== Step 3: Build the project =====
+call :log_info "Building project with %NUMBER_OF_PROCESSORS% threads..."
+cmake --build "%BUILD_DIR%" --config Release -- /m:%NUMBER_OF_PROCESSORS%
+if errorlevel 1 (
+    call :log_error "Build failed."
+    exit /b 1
+)
 
-echo [5] Copying lib/ directory to Release folder...
-xcopy /E /Y ..\lib Release\lib\
+:: ===== Step 4: Copy runtime lib directory =====
+call :log_info "Copying lib directory..."
+xcopy /E /Y "lib" "%OUTPUT_DIR%\lib\" >nul
 
-echo [6] Deploying Qt runtime dependencies...
-    "C:/Qt/6.9.0/msvc2022_64/bin/windeployqt.exe" Release\%TARGET%.exe
+:: ===== Step 5: Deploy Qt dependencies =====
+call :log_info "Deploying Qt runtime files..."
+"%QT_PATH%\bin\windeployqt.exe" --no-network --no-translations --no-opengl-sw --release "%OUTPUT_DIR%\%TARGET%.exe"
+if errorlevel 1 (
+    call :log_error "windeployqt failed."
+    exit /b 1
+)
 
-echo [7] Build complete. Opening output directory...
-start Release
+:: ===== Step 6: Done =====
+call :log_info "Build completed successfully."
 
 endlocal
+exit /b
+
+:: ===== Logging Functions =====
+:log_info
+powershell -Command "Write-Host '[INFO]  ' -ForegroundColor Cyan -NoNewline; Write-Host '%~1'"
+goto :eof
+
+:log_error
+powershell -Command "Write-Host '[ERROR] ' -ForegroundColor Red -NoNewline; Write-Host '%~1'"
+goto :eof

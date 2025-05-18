@@ -1,4 +1,23 @@
-build/
-installer/
+# Build system
+/build/
+/out/
+/CMakeFiles/
+/CMakeCache.txt
+/*.sln
+/*.vcxproj*
+
+# Qt generated
+*.qrc.depends
+*.autosave
+Makefile*
+
+# Installers
+/installer/
 ncmtool_install/ncmtool_setup.exe
-.vscode
+
+# VS Code
+.vscode/
+
+# User-specific
+*.user
+*.log
