@@ -17,6 +17,12 @@ void Worker::start() {
     int total = files.size();
 
     for (int i = 0; i < total; ++i) {
+        if (cancelRequested.load()) {
+            emit log("🛑 用户取消任务");
+            emit cancelled();
+            return;
+        }
+
         const QString &filePath = files[i];
         emit log(QString("🔄 处理：%1").arg(filePath));
 
@@ -60,7 +66,9 @@ void Worker::start() {
 
     emit done();
 }
-
+void Worker::cancel() {
+    cancelRequested.store(true);
+}
 bool Worker::callLibNcmdump(const QString &filePath, const QString &outputDir) {
     QString dllPath = QCoreApplication::applicationDirPath() + "/lib/libncmdump.dll";
     QLibrary lib(dllPath);
@@ -88,6 +96,8 @@ bool Worker::callLibNcmdump(const QString &filePath, const QString &outputDir) {
 }
 
 bool Worker::convertWithFfmpeg(const QString &inputPath, const QString &targetFormat) {
+    if (cancelRequested.load()) return false;  // ✅ 一开始就检查
+
     QString ffmpegPath = QCoreApplication::applicationDirPath() + "/lib/ffmpeg.exe";
     if (!QFile::exists(ffmpegPath)) {
         emit log("⚠️ ffmpeg.exe 未找到，跳过转码");
@@ -102,13 +112,23 @@ bool Worker::convertWithFfmpeg(const QString &inputPath, const QString &targetFo
     QStringList args = {"-y", "-i", inputPath, "-codec:a",
                         (targetFormat == "mp3" ? "libmp3lame" : "flac"),
                         output};
-    process.start(ffmpegPath, args);
-    bool finished = process.waitForFinished(30000);  // 最长等待 30 秒
 
-    if (!finished || !QFile::exists(output)) {
-        emit log("⚠️ ffmpeg 转码失败，输出文件未生成");
+    process.start(ffmpegPath, args);
+
+    // ⏳ 等待期间允许用户中断
+    while (!process.waitForFinished(200)) {
+        if (cancelRequested.load()) {
+            emit log("🛑 取消中：中止 ffmpeg 转码");
+            process.kill();
+            return false;
+        }
+    }
+
+    if (!QFile::exists(output)) {
+        emit log("⚠️ 转码失败，输出文件未生成");
         return false;
     }
 
     return true;
 }
+

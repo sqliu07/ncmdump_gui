@@ -21,7 +21,7 @@
       <item>
        <widget class="QPushButton" name="btnSelectFile">
         <property name="text">
-         <string>选择 .ncm 文件</string>
+         <string>选择 .ncm 文件（支持拖拽）</string>
         </property>
        </widget>
       </item>
@@ -86,6 +86,16 @@
      </widget>
     </item>
 
+    <item>
+     <widget class="QPushButton" name="btnCancel">
+      <property name="text">
+       <string>取消</string>
+      </property>
+      <property name="visible">
+       <bool>false</bool>
+      </property>
+      </widget>
+    </item>
     <item>
      <widget class="QTextEdit" name="textLog">
       <property name="readOnly">
