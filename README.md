@@ -19,13 +19,13 @@
 
 ## 🛠 构建说明
 
-项目使用 C++17 + Qt 6 + CMake 构建，并集成一键打包流程。
+项目使用 MSVC + Qt 6 + CMake 构建，并集成一键打包流程。
 
 ### 构建依赖
 
 - Qt 6.x（推荐 Qt 6.5 或以上）
 - CMake（建议 3.16+）
-- Ninja 或 MSVC 编译器
+- MSVC 编译器 （建议 2022以上）
 - [UPX](https://upx.github.io/)（可选，用于压缩可执行文件和 DLL）
 - [NSIS](https://nsis.sourceforge.io/)（用于生成安装包）
 
