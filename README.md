@@ -34,16 +34,16 @@
 项目提供以下两个脚本，位于项目根目录：
 
 ####  `build.bat`
-1. 生成ncmtool.exe可执行文件，路径：`build/Release/ncmtool.exe `如果你不需要安装，执行它即可
+1. 生成ncmtool.exe可执行文件，路径：`out/build-release/Release/ncmtool.exe `如果你不需要安装，执行它即可
 
 ####  `build_installer.bat`
 
 一键执行以下步骤：
 
-1. 调用 `windeployqt` 收集 Qt 运行库到 `installer/` 目录
+1. 调用 `windeployqt` 收集 Qt 运行库到 `out/build-release/installer/` 目录
 2. 拷贝 `lib/` 中的依赖（如 `ffmpeg.exe`、`libncmdump.dll`）
 3. 使用 `UPX` 压缩所有可执行文件和 DLL（可选）
-4. 调用 `makensis` 执行打包脚本，生成安装包 `ncmtool_setup.exe`
+4. 调用 `makensis` 执行打包脚本，生成安装包 `ncmtool_install/ncmtool_setup.exe`，运行即可安装
 
 ####  `ncmtool_installer.nsi`
 
