@@ -60,7 +60,7 @@ NSIS 安装脚本，定义了以下内容：
 
 - 解密核心逻辑：[@taurusxin](https://github.com/taurusxin) 的 [ncmdump](https://github.com/taurusxin/ncmdump)
 - 转码借助FFmpeg：[FFmpeg](https://github.com/FFmpeg/FFmpeg)
-- 图标素材：自制 / 免费资源（可替换）
+- 图标素材：使用[GPT-4o](https://openai.com/index/hello-gpt-4o/)生成
 
 ---
 
