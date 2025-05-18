@@ -19,13 +19,13 @@
 
 ## 🛠 构建说明
 
-项目使用 C++17 + Qt 6 + CMake 构建，并集成一键打包流程。
+项目使用 MSVC + Qt 6 + CMake 构建，并集成一键打包流程。
 
 ### 构建依赖
 
 - Qt 6.x（推荐 Qt 6.5 或以上）
 - CMake（建议 3.16+）
-- Ninja 或 MSVC 编译器
+- MSVC 编译器 （建议 2022以上）
 - [UPX](https://upx.github.io/)（可选，用于压缩可执行文件和 DLL）
 - [NSIS](https://nsis.sourceforge.io/)（用于生成安装包）
 
@@ -56,13 +56,26 @@ NSIS 安装脚本，定义了以下内容：
 
 ---
 
+## 📝 TODO
+
+- 支持“取消解密/转码”操作（中断线程）
+- ~~添加拖拽 `.ncm` 文件到窗口自动添加~~
+- 添加系统托盘图标与后台运行模式
+- 支持自动识别输出文件名冲突并重命名
+- 支持右键菜单：从文件资源管理器中快速调用
+- 支持加载整个文件夹中的 `.ncm` 文件
+- 支持记住最近路径
+- 支持删除原始ncm文件
+---
+
 ## 💡 致谢
 
 - 解密核心逻辑：[@taurusxin](https://github.com/taurusxin) 的 [ncmdump](https://github.com/taurusxin/ncmdump)
-- 图标素材：自制 / 免费资源（可替换）
+- 转码借助FFmpeg：[FFmpeg](https://github.com/FFmpeg/FFmpeg)
+- 图标素材：使用[GPT-4o](https://openai.com/index/hello-gpt-4o/)生成
 
 ---
 
 ## 📄 License
 
-本 GUI 项目使用 MIT 协议开源，核心库 `ncmdump` 遵循其原始 GPL-3.0 协议。请自行确认依赖项的许可条款。
+本 GUI 项目使用 MIT 协议开源，核心库 `ncmdump` 遵循其原始协议。请自行确认依赖项的许可条款。
