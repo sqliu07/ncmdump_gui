@@ -44,7 +44,7 @@ del installer\Qt6Network.dll >nul 2>&1
 
 :: 编译安装包
 echo [INFO] Building NSIS installer...
-"%NSIS_EXE%" ./ncmtool/ncmtool_installer.nsi
+"%NSIS_EXE%" ./ncmtool_install/ncmtool_installer.nsi
 
 echo [DONE] Installer is ready: ncmtool_setup.exe
 endlocal
