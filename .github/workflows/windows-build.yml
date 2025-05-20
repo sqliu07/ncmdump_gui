@@ -9,7 +9,6 @@ on:
 
 jobs:
   build:
-    name: Windows Build
     runs-on: windows-latest
 
     steps:
@@ -24,6 +23,8 @@ jobs:
 
       - name: Install CMake
         uses: jwlawson/actions-setup-cmake@v1
+        with:
+          cmake-version: '3.27.0'
 
       - name: Install NSIS
         run: choco install nsis -y
@@ -35,12 +36,10 @@ jobs:
         uses: microsoft/setup-msbuild@v2
 
       - name: Build project
-        run: |
-          ./build.bat
+        run: ./build.bat
 
       - name: Create installer
-        run: |
-          ./build_installer.bat
+        run: ./installer.bat
 
       - name: Upload Installer Artifact
         uses: actions/upload-artifact@v4
