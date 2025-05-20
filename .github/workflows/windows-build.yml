@@ -2,7 +2,9 @@ name: Build and Package NCMTool for Windows
 
 on:
   push:
-    branches: [main]
+    branches: 
+    - main
+    - test-ci
     tags: ['v*']
   pull_request:
     branches: [main]
