@@ -20,7 +20,7 @@ jobs:
         with:
           version: '6.5.0'
           arch: 'win64_msvc2019_64'
-          tools: 'tools_windeployqt'
+          tools: 'qt.tools.qttools'
 
       - name: Install CMake
         uses: jwlawson/actions-setup-cmake@v1
