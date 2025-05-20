@@ -2,13 +2,20 @@
 setlocal enabledelayedexpansion
 
 :: ===== Configuration =====
-:: ===== Modify these variables based on your environment. =====
 set TARGET=ncmtool
-set QT_PATH=C:\Qt\6.9.0\msvc2022_64
-set CMAKE_PREFIX=%QT_PATH%\lib\cmake
 
-set BUILD_DIR=out\build-release
-set OUTPUT_DIR=%BUILD_DIR%\Release
+:: === Qt Path: Use CI's QTDIR or fallback to local path ===
+if defined QTDIR (
+    set "QT_PATH=%QTDIR%"
+    call :log_info "Using Qt from environment: %QT_PATH%"
+) else (
+    set "QT_PATH=C:\Qt\6.9.0\msvc2022_64"
+    call :log_info "Using default Qt path: %QT_PATH%"
+)
+
+set "CMAKE_PREFIX=%QT_PATH%\lib\cmake"
+set "BUILD_DIR=out\build-release"
+set "OUTPUT_DIR=%BUILD_DIR%\Release"
 
 :: ===== Step 1: Clean previous build =====
 call :log_info "Removing previous build directory..."
